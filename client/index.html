@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MutualAid</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <link rel="stylesheet" href="client\styles.css">
+</head>
+<body>
+  <!-- NavBar -->
+  <nav class="navbar navbar-expand-lg bg-transparent">
+    <div class="container-fluid p-4 p-sm-5">
+      <a class="navbar-brand" href="#"><h3><em>MUTUAL</em> AID</h3></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav me-auto mb-1 mb-sm-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Home</a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-1 mb-lg-0">
+            <li class="nav-item me-4 mb-3 mb-sm-0">
+              <a class="nav-link" data-bs-toggle="modal" href="#LoginToggle">Login</a>
+            </li>
+            <li class="nav-item">
+              <button class="secondary-pink" data-bs-toggle="modal" href="#RegisterToggle">Sign Up</button>
+            </li>
+          </ul>        
+        </div>         
+      </div>
+    </div>
+  </nav>
+  <!-- End of NavBar -->
+
+  <!-- Main Container -->
+  <main class="glass container p-4 p-sm-5">
+    <h1>We (Still) Got This!</h1>
+    <p>
+      <strong>In need of support and safe access to abortion?</strong> One of our aunties (or uncles) has your back!
+      <br>
+      Interested in collective action? The <em>"auntie"</em> uprising is here. <strong>Join the revolution today!</strong>
+    </p>
+    <hr>
+    <button class="primary-pink join-now me-4" data-bs-toggle="modal" href="#RegisterToggle">Join Now</button>
+  </main>
+  <!-- End of Main Container -->
+
+ <!-- Modal -->
+  <div class="modal fade" id="LoginToggle" aria-hidden="true" aria-labelledby="LoginToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="LoginToggleLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Please enter your login credentials below:</p>
+          <form action="/dashboard" method="POST">
+            <input class="px-2 py-1 mb-1" type="email" name="email" placeholder="Email Address" spellcheck="false" required><br>
+            <input class="px-2 py-1 mb-1" type="password" name="password" placeholder="Password" spellcheck="false" required><br>
+            <p><button class="secondary-pink submit-pink my-1">Submit</button></p>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="primary-pink" data-bs-target="#RegisterToggle" data-bs-toggle="modal">Register Today</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="RegisterToggle" aria-hidden="true" aria-labelledby="RegisterToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="RegisterToggleLabel">Sign Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Please register an account with us below:</p>
+          <form action="/welcome" method="POST">
+            <input class="px-2 py-1 mb-1" type="text" name="name" placeholder="Name" spellcheck="false" required><br>
+            <input class="px-2 py-1 mb-1" type="email" name="email" placeholder="Email Address" spellcheck="false" required><br>
+            <input class="px-2 py-1 mb-1" type="password" name="password" placeholder="Password" spellcheck="false" required><br>
+            <p><button class="secondary-pink submit-pink  my-1">Submit</button></p>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="primary-pink" data-bs-target="#LoginToggle" data-bs-toggle="modal">I Already Have An Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Modal -->
+
+  <!-- <a href="https://www.freepik.com/vectors/girl-power">Girl power vector created by rawpixel.com - www.freepik.com</a> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+</html>

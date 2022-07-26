@@ -1,0 +1,22 @@
+{
+    "name": "mutual_aid",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/app.js",
+    "scripts": {
+        "dev": "nodemon src/app.js -e js,html,css,json",
+        "start": "node src/app.js"
+    },
+    "author": "Crystal Agoncillo",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^2.0.19"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "mongoose": "^6.4.6",
+        "validator": "^13.7.0"
+    }
+}
