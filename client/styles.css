@@ -130,6 +130,13 @@ input {
     color: #2f3034;
 }
 
+.logout {
+    background:transparent;
+    border:0px;
+    color: rgba(47,48,52, 0.55);
+    cursor: pointer;
+}
+
 ::placeholder {
     color: #c8acb2;
 }

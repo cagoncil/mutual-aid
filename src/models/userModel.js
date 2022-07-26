@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const validator = require('validator'); // use validator for complex validations like email, SSN, etc.
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config(); // for authenticateUser
 
 const userSchema = new Schema({
     name: {
@@ -32,18 +34,46 @@ const userSchema = new Schema({
 			}
 		}
 	},
+	tokens: [{
+		token: {
+			type: String,
+			required: true
+		}
+	}]
 });
-
 
 // Hash the plain text password before saving
 	// with 'save' as the first param, mongoose will execute this callback prior to calling save()
 userSchema.pre('save', async function (next) {
 	const user = this // user to be saved
 	if (user.isModified('password')) { // Hash password if it's been created or modified by the user
-		user.password = await bcrypt.hash(user.password, 8); // 2nd arg = # of hashing rounds to perform
+		user.password = await bcrypt.hash(user.password, 10); // 2nd arg = # of hashing rounds to perform
 		console.log('Password was successfully hashed');
 	}
 	next(); // needed to save the user
 });
+
+// Generate JSON Web Token to authenticate user
+userSchema.methods.generateAuthToken = async function() {
+	const user = this; // 'this' is a specific instance of a user
+	const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+	user.tokens = user.tokens.concat({ token });
+	await user.save();
+	return token;
+}
+
+// Locate user within user database for validation purposes
+userSchema.statics.findByCredentials = async (email, password) => {
+	// find user by email and throw error if email does not exist in the database
+	const user = await User.findOne({ email });
+	// console.log(user);
+	if (!user) throw new Error('Invalid credentials. Unable to login.');
+	// verify password using bcrypt's compare function and throw error if password is incorrect
+	const isMatch = await bcrypt.compare(password, user.password);
+	if (!isMatch) throw new Error('Invalid credentials. Unable to login.');
+	return user; // return user only if email and password are both correct
+}
   
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

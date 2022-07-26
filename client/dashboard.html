@@ -35,7 +35,10 @@
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-1 mb-lg-0">
             <li class="nav-item me-4 mb-3 mb-sm-0">
-              <a class="nav-link" href="/">Log Out</a>
+              <form method='POST' action='/logout'>
+                <input class="nav-link logout" type="submit" value="Log Out" />
+                <!-- <a class="nav-link" href="/">Log Out</a> -->
+              </form>
             </li>
             <li class="nav-item">
               <button class="secondary-pink" href="/account">My Account</button>
