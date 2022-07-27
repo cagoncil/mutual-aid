@@ -29,16 +29,21 @@ h1, h2, h3 {
     color: #2f3034;
 }
 
-h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 h1 {
     text-decoration: underline 7px #fcc089;
     text-underline-offset: -2px;
     margin-bottom: 2rem;
 }
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h4 {
+    font-weight: 700;
+}
+
 
 button {
     background: #fa698c;

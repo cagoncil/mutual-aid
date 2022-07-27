@@ -36,7 +36,7 @@ router.post('/logout', userController.authenticateUser, async (req, res) => {
 // Get user data from API in route /profile
 router.get('/profile', userController.authenticateUser, (req, res) => {
   const { user } = res.locals;
-	return res.send({  user: user });
+	return res.send({  user });
 });
 
 // Go to account page to edit settings
