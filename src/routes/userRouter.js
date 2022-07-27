@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const router = new express.Router();
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel'); // Require user model file
 const userController = require('../controllers/userController');
 
@@ -9,6 +10,7 @@ router.get('/', userController.authenticateUser, (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../../client/dashboard.html'));
 });
 
+// ===== CREATE =====
 // User registration
 router.post('/register', userController.createUser, (req, res) => {
   console.log('User creation was successful');
@@ -27,19 +29,78 @@ router.post('/logout', userController.authenticateUser, async (req, res) => {
   await req.user.save();
   // console.log('req.user obj after save:', req.user);
   return res.redirect('/');
-  // Terminates user's session - seems unnecessary for now, but here just in case
-    // req.session = null // deletes the cookie
-    // req.session.destroy() // ends session after redirected to index.html
 });
 
-// Get user data
+// ===== READ =====
+// Get user data from API in route /profile
 router.get('/profile', userController.authenticateUser, (req, res) => {
-	return res.send({  user: req.user }) // req.user.email, req.user._id
+	return res.send({  user: req.user }); // req.user.email, req.user._id
 });
 
+// Go to account page to edit settings
 router.get('/account', userController.authenticateUser, (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../../client/account.html'));
 });
+
+// ===== UPDATE =====
+router.patch('/profile', userController.authenticateUser, async (req, res, next) => {
+  console.log('Processing user update request...');
+
+	const updates = Object.keys(req.body);
+  const updatedItem = updates[0];
+	const allowedUpdates = ['name', 'email', 'password', 'oldPassword'];
+
+	const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+	if (!isValidOperation) return next({ error: 'Invalid update' });
+
+	try {
+		if (updatedItem === 'email') {
+      // Update email
+			const authenticated = await bcrypt.compare(req.body.password, req.user.password);
+			if (authenticated) req.user.email = req.body.email; // update the email if the password matches
+			else throw new Error('Password entered was invalid. Email was not updated.');
+		} else if (updatedItem === 'oldPassword') {
+      // Update password
+			const authenticated = await bcrypt.compare(req.body.oldPassword, req.user.password);
+      const matchingInputs = req.body.password[0] === req.body.password[1];
+      // update "password" if the current (old) password matches AND the inputs for the new password match
+			if (authenticated && matchingInputs) req.user.password = req.body.password[0]; 
+			else throw new Error('Password entered was invalid. Password was not updated.');
+		} else { // Update other fields that aren't data-sensitive/don't require password validation
+			updates.forEach((update) => req.user[update] = req.body[update]);
+		};
+		await req.user.save();
+		return res.redirect('/account');
+	} catch (err) {
+    if (err instanceof Error) err = err.toString();
+    return next(err);
+	};
+});
+
+// ===== DELETE =====
+router.delete('/profile', userController.authenticateUser, async (req, res, next) => {
+	const authenticated = await bcrypt.compare(req.body.password, req.user.password);
+	try {
+		if (authenticated) { // If password is valid
+			await req.user.remove();
+			res.redirect('/');
+		}
+    else throw new Error('Password entered was invalid. Account deletion was unsuccessful.');
+	} catch (err) {
+    if (err instanceof Error) err = err.toString();
+		return next(err);
+	};
+
+});
+
+
+
+
+
+
+
+
+
 
 // catch-all route handler for 404 errors
 router.use((req, res) => {
