@@ -24,17 +24,19 @@ router.post('/login', userController.validateUser, (req, res) => {
 
 // Log out user
 router.post('/logout', userController.authenticateUser, async (req, res) => {
-  // console.log('req.user obj:', req.user);
-  req.user.tokens = [];
-  await req.user.save();
-  // console.log('req.user obj after save:', req.user);
+  const { user } = res.locals;
+  user.tokens = [];
+  console.log('user obj before save:', user);
+  await user.save();
+  console.log('user obj after save:', user);
   return res.redirect('/');
 });
 
 // ===== READ =====
 // Get user data from API in route /profile
 router.get('/profile', userController.authenticateUser, (req, res) => {
-	return res.send({  user: req.user }); // req.user.email, req.user._id
+  const { user } = res.locals;
+	return res.send({  user: user });
 });
 
 // Go to account page to edit settings
@@ -54,22 +56,23 @@ router.patch('/profile', userController.authenticateUser, async (req, res, next)
 	if (!isValidOperation) return next({ error: 'Invalid update' });
 
 	try {
+    const { user } = res.locals;
 		if (updatedItem === 'email') {
       // Update email
-			const authenticated = await bcrypt.compare(req.body.password, req.user.password);
-			if (authenticated) req.user.email = req.body.email; // update the email if the password matches
+			const authenticated = await bcrypt.compare(req.body.password, user.password);
+			if (authenticated) user.email = req.body.email; // update the email if the password matches
 			else throw new Error('Password entered was invalid. Email was not updated.');
 		} else if (updatedItem === 'oldPassword') {
       // Update password
-			const authenticated = await bcrypt.compare(req.body.oldPassword, req.user.password);
+			const authenticated = await bcrypt.compare(req.body.oldPassword, user.password);
       const matchingInputs = req.body.password[0] === req.body.password[1];
       // update "password" if the current (old) password matches AND the inputs for the new password match
-			if (authenticated && matchingInputs) req.user.password = req.body.password[0]; 
-			else throw new Error('Password entered was invalid. Password was not updated.');
+			if (authenticated && matchingInputs) user.password = req.body.password[0]; 
+			else throw new Error('Password was not updated. Either the current password you entered was invalid or you did not confirm the same new password. Please try again.');
 		} else { // Update other fields that aren't data-sensitive/don't require password validation
-			updates.forEach((update) => req.user[update] = req.body[update]);
+			updates.forEach((update) => user[update] = req.body[update]);
 		};
-		await req.user.save();
+		await user.save();
 		return res.redirect('/account');
 	} catch (err) {
     if (err instanceof Error) err = err.toString();
@@ -79,10 +82,11 @@ router.patch('/profile', userController.authenticateUser, async (req, res, next)
 
 // ===== DELETE =====
 router.delete('/profile', userController.authenticateUser, async (req, res, next) => {
-	const authenticated = await bcrypt.compare(req.body.password, req.user.password);
+  const { user } = res.locals;
+	const authenticated = await bcrypt.compare(req.body.password, user.password);
 	try {
 		if (authenticated) { // If password is valid
-			await req.user.remove();
+			await user.remove();
 			res.redirect('/');
 		}
     else throw new Error('Password entered was invalid. Account deletion was unsuccessful.');

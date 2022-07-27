@@ -43,8 +43,8 @@ userController.authenticateUser = async (req, res, next) => {
 		if (!user) throw new Error('You must be logged in to view this page.'); // triggers catch(e) below
     console.log('User authentication was successful');
 
-		req.token = token; // added for logout
-		req.user = user;
+		res.locals.token = token; // added for logout
+		res.locals.user = user;
 		next(); // user authenticated correctly
 	} catch (err) {
     if (err instanceof Error) err = err.toString();

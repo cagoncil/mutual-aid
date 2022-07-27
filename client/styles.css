@@ -29,6 +29,11 @@ h1, h2, h3 {
     color: #2f3034;
 }
 
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 h1 {
     text-decoration: underline 7px #fcc089;
     text-underline-offset: -2px;
@@ -44,13 +49,14 @@ button {
     border-radius: 40px;
     border: none;
     padding: 0.4rem 1.5rem;
-    transition: all linear 0.2s;
+    transition: outline linear 0.2s, background-color linear 0.1s, color linear 0.1s;
+    outline: 0.2rem solid transparent;
 }
 
     button:hover {
         cursor: pointer;
         border: none;
-        outline: 0.2rem solid #fcc089;
+        outline: 0.2rem solid rgba(250, 105, 140, 0.45);
         color: #fff;
     }
 
@@ -77,6 +83,18 @@ button {
         color: #fff;
     }
 
+.navbar-toggler {
+    border-radius: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border: 0;
+}
+
+    .navbar-toggler:focus {
+        border: none;
+        box-shadow: 0 0 0 .25rem #f3c992;
+    }
+
 .submit-pink {
     border-radius: 5px;
     box-sizing: content-box;
@@ -87,7 +105,7 @@ button {
 a {
     color: #2f3034;
     font-size: 1rem;
-    transition: all linear 0.2s;
+    transition: color linear 0.2s;
     text-decoration-color: #fa698c;
 }
 
@@ -139,7 +157,7 @@ input {
 }
 
 ::placeholder {
-    color: #c8acb2 !important;
+    color: #c8acb2;
 }
 
 ::selection {
