@@ -65,7 +65,7 @@ userSchema.methods.generateAuthToken = async function() {
 // Locate user within user database for validation purposes
 userSchema.statics.findByCredentials = async (email, password) => {
 	// find user by email and throw error if email does not exist in the database
-	console.log('req.body:', req.body);
+	console.log(email, password);
 	const user = await User.findOne({ email });
 	console.log('user:', user);
 	if (!user) throw new Error('Invalid credentials. Unable to login.');
