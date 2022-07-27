@@ -108,7 +108,7 @@ router.use((req, res) => {
 });
 
 router.use((err, req, res, next) => { // NEEDS ALL PARAMS, IN EXACT ORDER
-  if (err === 'Error: You must be logged in to view this page.') {
+  if (err === 'Error: You must be logged in to view this page.' || err === 'JsonWebTokenError: jwt must be provided') {
     return res.status(200).sendFile(path.resolve(__dirname, '../../client/index.html'));
   }
   
