@@ -12,7 +12,8 @@ const app = express();
 require('dotenv').config();
 
 const password = process.env.PASSWORD; // mongoDB instance password
-const mongoURI = process.env.NODE_ENV || process.env.MONGODB_URI || `mongodb+srv://cagoncil:${password}@mutualaid.nbeg1.mongodb.net/?retryWrites=true&w=majority`;
+const mongoURI = process.env.MONGODB_URI;
+// const mongoURI = process.env.NODE_ENV || process.env.MONGODB_URI || `mongodb+srv://cagoncil:${password}@mutualaid.nbeg1.mongodb.net/?retryWrites=true&w=majority`;
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once('open', () => {
   console.log('Connected to Database');
