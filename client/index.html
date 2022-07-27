@@ -14,7 +14,7 @@
   <nav class="navbar navbar-expand-lg bg-transparent">
     <div class="container-fluid p-4 p-sm-5">
       <a class="navbar-brand" href="#"><h3><em>MUTUAL</em> AID</h3></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button id="toggleBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -63,7 +63,7 @@
           <p>Please enter your login credentials below:</p>
           <form action="/login" method="POST">
             <input class="px-2 py-1 mb-1" type="email" name="email" placeholder="Email Address" spellcheck="false" required><br>
-            <input class="px-2 py-1 mb-1" type="password" name="password" placeholder="Password" spellcheck="false" required><br>
+            <input class="px-2 py-1 mb-1" type="password" name="password" placeholder="Password" spellcheck="false" autocomplete="off" required><br>
             <p><button class="secondary-pink submit-pink my-1">Submit</button></p>
           </form>
         </div>
@@ -85,7 +85,7 @@
           <form action="/register" method="POST">
             <input class="px-2 py-1 mb-1" type="text" name="name" placeholder="Name" spellcheck="false" required><br>
             <input class="px-2 py-1 mb-1" type="email" name="email" placeholder="Email Address" spellcheck="false" required><br>
-            <input class="px-2 py-1 mb-1" type="password" name="password" placeholder="Password" spellcheck="false" required><br>
+            <input class="px-2 py-1 mb-1" type="password" name="password" placeholder="Password" spellcheck="false" autocomplete="off" required><br>
             <p><button class="secondary-pink submit-pink  my-1" type="submit">Submit</button></p>
           </form>
         </div>
@@ -100,5 +100,7 @@
   <!-- <a href="https://www.freepik.com/vectors/girl-power">Girl power vector created by rawpixel.com - www.freepik.com</a> -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <script src="client\index.js"></script>
+
 </body>
 </html>
