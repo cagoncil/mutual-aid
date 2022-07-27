@@ -3,7 +3,7 @@ const express = require('express');
 // const router = express.Router();
 const mongoose = require('mongoose'); // Connect to MongoDB database
 const cookieParser = require('cookie-parser'); // Use cookies to store the JSON web tokens on the frontend
-// const methodOverride = require('method-override') // Allows HTML forms to process PATCH/DELETE requests
+const methodOverride = require('method-override'); // Allows HTML forms to process PATCH/DELETE requests
 
 // Load user model, user controller, and user router modules into the app
 // const User = require('./models/userModel');
@@ -26,7 +26,7 @@ mongoose.connection.once('open', () => {
 app.use(express.json());  // Recognizes incoming req.object from a POST request as a JSON object
 app.use(express.urlencoded({ extended: false }));  // Parses data sent via forms from the frontend
 app.use(cookieParser()); // Parses cookies sent with the forms from the frontend
-// app.use(methodOverride('_method')) // Allows HTML forms to process PATCH/DELETE requests
+app.use(methodOverride('_method')); // Allows HTML forms to process PATCH/DELETE requests
 app.use('/client', express.static(path.join(__dirname, '..', 'client'))); // Serves static files (images, css, js...) on the frontend
 
 app.use(userRouter);

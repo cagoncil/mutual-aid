@@ -41,9 +41,7 @@
               </form>
             </li>
             <li class="nav-item">
-              <a href="/account">
-                <button class="secondary-pink">My Account</button>
-              </a>
+              <button class="secondary-pink" href="/account">My Account</button>
             </li>
           </ul>        
         </div>         
@@ -54,28 +52,68 @@
 
   <!-- Main Container -->
   <main class="glass container p-4 p-sm-5">
-    <h4>Welcome Back</h4><hr><br>
-    <p>
-      What would you like to do?
-    </p>
-    <ul>
-        <li>
-            <a href="/clinics">Find A Nearby Clinic</a>
-        </li>
-        <li>
-            <a href="/help">Request a Volunteer</a>
-        </li>
-        <li>
-            <a href="/volunteer">Become a Volunteer</a>
-        </li>
-    </ul>
+    <h4>Account Settings</h4><hr><br>
+    
+    <div id="account"></div>
+
+    <div class="input-group mb-3"></div>
   </main>
   <!-- End of Main Container -->
-
-
 
   <!-- <a href="https://www.freepik.com/vectors/girl-power">Girl power vector created by rawpixel.com - www.freepik.com</a> -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <script>
+
+    const showInput = (e) => {
+      console.log(e.target.id.toLowerCase())
+      document.querySelector('.input-group').innerHTML = `
+        <form method='POST' action='/profile?_method=PATCH' spellcheck=false>
+          <input type="text" name="${e.target.id.toLowerCase()}" class="form-control" placeholder="${e.target.id}" aria-label="${e.target.id}" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="submit" id="button${e.target.id}">Update ${e.target.id}</button>
+        </form>
+      `;
+    }
+
+    const accountDiv = document.getElementById('account');
+    // Retrieve user data to display on account settings page
+    fetch('/profile')
+      .then((response) => {
+        if (!response.ok) {
+            throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((data) => {
+        console.log('success!', data.user);
+        const { name, email, password } = data.user;
+        const dataArr = ['Name', 'Email', 'Password'];
+
+        const accountData = document.createElement('div');
+        accountData.setAttribute('id', 'userData');
+        accountData.innerHTML = `
+          <p><strong>${dataArr[0]}</strong>: ${name}</p>
+          <p><strong>${dataArr[1]}</strong>: ${email}</p>
+          <p><strong>${dataArr[2]}</strong>: ********</p>
+        `;
+        accountDiv.appendChild(accountData);
+
+        const editLinks = document.createElement('div');
+        editLinks.setAttribute('id', 'editLinks');
+        editLinks.innerHTML = `
+          <p><button id='${dataArr[0]}' class='edit'>Edit</button></p>
+          <p><button id='${dataArr[1]}' class='edit'>Edit</button></p>
+          <p><button id='${dataArr[2]}' class='edit'>Edit</button></p>
+        `;
+        accountDiv.appendChild(editLinks);
+
+        document.getElementById(`${dataArr[0]}`).onclick = (e) => showInput(e);
+        document.getElementById(`${dataArr[1]}`).onclick = (e) => showInput(e);
+        document.getElementById(`${dataArr[2]}`).onclick = (e) => showInput(e);
+        
+      })
+      .catch(err => console.log(err))
+
+  </script>
 </body>
 </html>

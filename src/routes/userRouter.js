@@ -4,43 +4,41 @@ const router = new express.Router();
 const User = require('../models/userModel'); // Require user model file
 const userController = require('../controllers/userController');
 
-// route handler to respond with main app
-router.get('/', (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, '../../client/index.html'));
+// Prefers to route user to dashboard if authenticated, else re-routes user to homepage
+router.get('/', userController.authenticateUser, (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/dashboard.html'));
 });
 
-// User Registration
-router.post('/welcome', userController.createUser, (req, res) => {
+// User registration
+router.post('/register', userController.createUser, (req, res) => {
   console.log('User creation was successful');
-  // res.status(201).redirect('/dashboard');
-  return res.redirect('/dashboard');
+  return res.redirect('/');
 });
 
-// User Login
-router.post('/dashboard', userController.validateUser, (req, res) => {
-  return res.redirect('/dashboard');
+// User login
+router.post('/login', userController.validateUser, (req, res) => {
+  return res.redirect('/');
 });
 
-// Redirect to dashboard after successful user registration or login
-router.get('/dashboard', userController.authenticateUser, (req, res) => {
-	return res.status(200).sendFile(path.resolve(__dirname, '../../client/dashboard.html'));
-});
-
+// Log out user
 router.post('/logout', userController.authenticateUser, async (req, res) => {
+  // console.log('req.user obj:', req.user);
   req.user.tokens = [];
   await req.user.save();
+  // console.log('req.user obj after save:', req.user);
   return res.redirect('/');
   // Terminates user's session - seems unnecessary for now, but here just in case
     // req.session = null // deletes the cookie
     // req.session.destroy() // ends session after redirected to index.html
 });
 
+// Get user data
+router.get('/profile', userController.authenticateUser, (req, res) => {
+	return res.send({  user: req.user }) // req.user.email, req.user._id
+});
 
-
-
-
-router.get('/account', (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, '../../client/dashboard.html'));
+router.get('/account', userController.authenticateUser, (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/account.html'));
 });
 
 // catch-all route handler for 404 errors
@@ -49,7 +47,12 @@ router.use((req, res) => {
 });
 
 router.use((err, req, res, next) => { // NEEDS ALL PARAMS, IN EXACT ORDER
-  console.log('console.logged error', err, 'end of console.logged error');
+  if (err === 'Error: You must be logged in to view this page.') {
+    return res.status(200).sendFile(path.resolve(__dirname, '../../client/index.html'));
+  }
+  
+  console.log(`Global error handler caught error: ${err}`);
+  
   let errMsg = err;
   if (err.errors !== undefined) {
     if (err.errors.hasOwnProperty('password') && err.errors.hasOwnProperty('name')) {
@@ -69,11 +72,12 @@ router.use((err, req, res, next) => { // NEEDS ALL PARAMS, IN EXACT ORDER
     } else if (err.errors.hasOwnProperty('email')) {
       errMsg = `Registration failed: ${err.errors.email.message}`;
     }
-    return res.status(400).send({ Error: errMsg });
+    return res.status(400).send({ Error: err });  
   } else if (err.code === 11000) {
     errMsg = 'Registration failed: a user is already registered with that email.';
     return res.status(400).send({ Error: errMsg });
   }
+  // if (err === 'Error: You must be logged in to view this page.') return res.redirect('/');
   return res.status(500).send(err);
 });
 

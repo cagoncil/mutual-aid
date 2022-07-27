@@ -98,6 +98,7 @@ a {
     .err-link {
         text-decoration: underline 3px #fa698c;
         text-underline-offset: 6px;
+        transition: none;
     }
 
     .err-link:hover {
@@ -133,12 +134,12 @@ input {
 .logout {
     background:transparent;
     border:0px;
-    color: rgba(47,48,52, 0.55);
+    color: rgba(47,48,52, 0.65);
     cursor: pointer;
 }
 
 ::placeholder {
-    color: #c8acb2;
+    color: #c8acb2 !important;
 }
 
 ::selection {
@@ -146,6 +147,96 @@ input {
     background: #FB868B;
 }
 
+/* backend styles */
+
+#account {
+    display: flex;
+}
+
+#userData {
+    margin-right: 200px;
+}
+
+.form-control {
+    border-color: rgba(250, 105, 140, 0.55);
+}
+
+.form-control:focus {
+    border-color: #fa698c;
+    box-shadow: 0 0 0 .25rem rgba(250, 105, 140, 0.35);
+}
+
+.input-group .btn-outline-secondary {
+    background-color: #fa698c;
+    color: #fff;
+    border-color: #fa698c;
+}
+
+    .input-group .btn-outline-secondary:focus {
+        border-color: #fa698c;
+        box-shadow: 0 0 0 .25rem rgba(250, 105, 140, 0.35);
+    }
+
+    .input-group .btn-outline-secondary:hover {
+        outline: none;
+        border: 1px solid #fa698c;
+        box-shadow: 0 0 0 .25rem rgba(250, 105, 140, 0.35);
+    }
+
+.input-group:focus {
+    border-color: #FB868B !important;
+    outline-color: #FB868B !important;
+}
+
+.input-group form {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    box-sizing: border-box;
+    width: 375px;
+}
+
+form .form-control {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    position: relative !important;
+    flex: 1 1 auto !important;
+    width: 1% !important;
+    min-width: 0 !important;
+    display: block;
+    /* width: 100%; */
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+}
+
+form .btn-outline-secondary {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    position: relative;
+    z-index: 2;
+}
+
+
+.edit {
+    padding: 0;
+    background:transparent;
+    border: none;
+    color: rgba(47,48,52, 0.65);
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.edit:hover {
+    outline: none;
+    color: #2f3034;
+}
 
 
 
@@ -171,5 +262,19 @@ input {
 
     a, .nav-link, p, button {
         font-size: 1.15rem;
+    }
+
+    /* backend files */
+
+    #account {
+        justify-content: space-between;
+    }
+    
+    #userData {
+        margin-right: 0;
+    }
+
+    .input-group {
+        width: 100%;
     }
 }
