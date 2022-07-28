@@ -5,7 +5,7 @@ body {
     color: #2f3034;
     font-family: 'Roboto', sans-serif;
     background-color: peachpuff;
-    background-image: url('women.png');
+    background-image: url('assets/women.png');
     background-size: 60%;
     background-repeat: no-repeat;
     background-position: right bottom;
@@ -15,14 +15,6 @@ body {
     background: rgba(255,255,255,0.15);
     border-radius: 30px;
 }
-
-/* .container {
-    padding: 5em;
-}
-
-.container-fluid {
-    padding: 3rem 6rem;
-} */
 
 h1, h2, h3 {
     font-family: 'Archivo Black', sans-serif;
@@ -142,6 +134,21 @@ em {
     font-weight: bold;
 }
 
+.modal-header {
+    border-bottom-color: rgba(250, 105, 140, 0.45);
+    width: 90%;
+    margin: auto;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.modal-body {
+    width: 90%;
+    margin: auto;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 .modal-content {
     background: #ffead8;
 }
@@ -152,6 +159,8 @@ em {
 
 input {
     color: #2f3034;
+    border: 1px solid #746960; 
+    border-radius: 0.25rem;
 }
 
 .logout {
@@ -162,7 +171,7 @@ input {
 }
 
 ::placeholder {
-    color: #c8acb2;
+    color: rgba(217, 100, 128, 0.657);
 }
 
 ::selection {

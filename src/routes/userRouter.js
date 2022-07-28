@@ -39,9 +39,19 @@ router.get('/profile', userController.authenticateUser, (req, res) => {
 	return res.send({  user });
 });
 
-// Go to account page to edit settings
+// Go to the account page to edit settings
 router.get('/account', userController.authenticateUser, (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../../client/account.html'));
+});
+
+// Go to the clinics map page
+router.get('/clinics', userController.authenticateUser, (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/clinics.html'));
+});
+
+// Go to the community support page
+router.get('/help', userController.authenticateUser, (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/help.html'));
 });
 
 // ===== UPDATE =====
