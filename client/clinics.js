@@ -29,7 +29,7 @@ const openModal = () => {
 
 states.forEach((state) => {
   state.addEventListener('click', () => {
-    console.log('added proxy!');
+    console.log('Added personal proxy!');
     // Get 2-digit state code from click
     const stateCode = state.id;
     console.log(stateCode);
@@ -39,7 +39,7 @@ states.forEach((state) => {
     content.appendChild(div);
     document.querySelector('h6').innerText = `Processing your request for ${stateName}...`;
 
-    const URL = `https://thingproxy.freeboard.io/fetch/https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
+    const URL = `https://fast-falls-79139.herokuapp.com/https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
     fetch(URL, {
       method: "GET",
       mode: "cors",
