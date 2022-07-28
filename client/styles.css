@@ -183,6 +183,11 @@ input {
     background: #FB868B;
 }
 
+#map {
+    height: 50%;
+    width: 50%;
+}
+
 /* backend styles */
 
 #account {

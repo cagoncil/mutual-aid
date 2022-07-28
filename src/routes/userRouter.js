@@ -44,9 +44,14 @@ router.get('/account', userController.authenticateUser, (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../../client/account.html'));
 });
 
-// Go to the clinics map page
+// Go to the nearby clinics map page
 router.get('/clinics', userController.authenticateUser, (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../../client/clinics.html'));
+});
+
+// Go to the state laws map page
+router.get('/statelaws', userController.authenticateUser, (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/statelaws.html'));
 });
 
 // Go to the community support page
