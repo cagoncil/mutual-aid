@@ -19,6 +19,22 @@ mongoose.connection.once('open', () => {
 });
 
 // handle parsing request body
+app.enable('trust proxy'); //needed if you're behind a load balancer
+// app.use((req, res, next) => {
+//   console.log('req.secure:', req.secure);
+//   console.log("https://" + req.headers.host + req.url);
+//   if (req.secure) return next();
+//     res.redirect("https://" + req.headers.host + req.url);
+// });
+app.use((req, res, next) => {
+  console.log('req.secure:', req.secure);
+  console.log("https://" + req.headers.host + req.url);
+  if (req.header('x-forwarded-proto') !== 'https'){
+    return res.redirect('https://' + req.header('host') + req.url);
+  } else{
+    return next();
+  }
+})
 app.use(express.json());  // Recognizes incoming req.object from a POST request as a JSON object
 app.use(express.urlencoded({ extended: false }));  // Parses data sent via forms from the frontend
 app.use(cookieParser()); // Parses cookies sent with the forms from the frontend
