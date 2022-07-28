@@ -65,7 +65,7 @@ path:hover, circle:hover {
 /* Modal Content/Box */
 .modal-content {
   background-color: #feecd4;
-  margin: 5vh auto;
+  margin: 9vh auto;
   padding: 2rem;
   border: 1px solid rgba(250, 105, 140, 0.45);
   width: 60vw;
