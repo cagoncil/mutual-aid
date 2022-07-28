@@ -29,6 +29,7 @@ const openModal = () => {
 
 states.forEach((state) => {
   state.addEventListener('click', () => {
+    console.log('added proxy!');
     // Get 2-digit state code from click
     const stateCode = state.id;
     console.log(stateCode);
@@ -49,9 +50,7 @@ states.forEach((state) => {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       const stateData = data[Object.keys(data)[0]];
-      console.log(stateData);
 
       if (stateData) {
         let stateBans = '';
