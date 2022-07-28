@@ -130,13 +130,13 @@ states.forEach((state) => {
 
         const requiresCoverage = insurance[stateName].requires_coverage ? `${stateName} requires that state-regulated private health plans cover abortion. These requirements do not apply to self-insured plans (in which the employer takes on all the risk, instead of contracting with a health insurer) as self-insured plans are regulated at the federal, not state, level.` : `${stateName} does not require state-regulated private health plans to cover abortion.`;
         const exchangeCoverage = insurance[stateName].exchange_coverage_no_restrictions ? `${stateName} has not restricted abortion coverage in ACA plans.` : `${stateName} has restricted abortion coverage in ACA plans.`;
-        const medicaidCoverage = insurance[stateName].medicaid_coverage_provider_patient_decision ? `${stateName} has a policy in place to use Medicaid funds to pay for abortion.` : `${stateName} does not have a policy in place to use Medicaid funds to pay for abortion`;
+        const medicaidCoverage = insurance[stateName].medicaid_coverage_provider_patient_decision ? `${stateName} has a policy in place to use Medicaid funds to pay for abortion.` : `${stateName} does not have a policy in place to use Medicaid funds to pay for abortion.`;
 
         insuranceDiv.innerHTML = `<br>
           <p><h3>State Insurance Laws</h3></p>
-          <p>${requiresCoverage}</p>
-          <p>${exchangeCoverage}</p>
-          <p>${medicaidCoverage}</p>
+          <p><strong>Private coverage laws</strong>: ${requiresCoverage}</p>
+          <p><strong>Medicaid coverage laws</strong>: ${medicaidCoverage}</p>
+          <p><strong>ACA Health Care Exchange laws</strong>: ${exchangeCoverage}</p>
         `;
       } else {
         insuranceDiv.innerHTML = `<br>
@@ -151,7 +151,7 @@ states.forEach((state) => {
       const waitingPeriodsDiv = document.createElement('div');
 
       if (stateName in waitingPeriods) { 
-        console.log(waitingPeriods[stateName]);
+        // console.log(waitingPeriods[stateName]);
 
         const counseling = waitingPeriods[stateName].counseling_visits === 1 ? `Counseling visits are required by ${stateName} law.` : `${stateName} requires the pregnant person make two clinic visits to obtain abortion counseling and/or an ultrasound before their waiting period begins.`;
         const hours = waitingPeriods[stateName].waiting_period_hours ? `${stateName} has a mandatory waiting period requirement of ${waitingPeriods[stateName].waiting_period_hours} hours. (All states waive mandatory waiting period requirements in the case of a medical emergency or when the pregnant person's life or health is threatened).` : `${stateName} does not have a waiting period law in effect.`;
@@ -159,38 +159,51 @@ states.forEach((state) => {
 
         waitingPeriodsDiv.innerHTML = `<br>
           <p><h3>State Waiting Period Laws</h3></p>
-          <p>${counseling}</p>
-          <p>${hours}</p>
+          <p><strong>Abortion counseling laws</strong>: ${counseling}</p>
+          <p><strong>Waiting period</strong>: ${hours}</p>
           ${notes}
         `;
       } else {
         waitingPeriodsDiv.innerHTML = `<br>
           <p><h3>State Waiting Period Laws</h3></p>
-          <p>${stateName} does not have any waiting period laws in place.</p>
+          <p>Sorry, waiting period law data is unavailable for that state.</p>
         `;
       }
       content.append(waitingPeriodsDiv);
 
 
-      // const minors = data[Object.keys(data)[2]];
-      // const minorsDiv = document.createElement('div');
+      const minors = data[Object.keys(data)[2]];
+      const minorsDiv = document.createElement('div');
 
-      // if (stateName in minors) { 
-      //   console.log(minors[stateName]);
+      if (stateName in minors) { 
+        // console.log(minors[stateName]);
 
+        const belowAge = minors[stateName].below_age ? `<p>Pregnant persons below the age of ${minors[stateName].below_age} are considered to be minors in the state of ${stateName}.</p>` : '';
+        const judicialBypass = minors[stateName].judicial_bypass_available ? `<p>In ${stateName}, a judge can excuse a minor seeking abortion from the required parental consent and/or notification.</p>` : '';
+        let parentsRequired = '';
+        if (minors[stateName].parents_required === 1) {
+          parentsRequired = `<p>In ${stateName}, in order for a minor to get an abortion, one of their parents must first be notified.</p>`;
+        } else if (minors[stateName].parents_required === 2) {
+          parentsRequired = `<p>In ${stateName}, in order for a minor to get an abortion, both of their parents must first be notified.</p>`;
+        } else {
+          parentsRequired = `<p>There are no parental notification requirements for minors' abortions currently being enforced in the state of ${stateName}.</p>`;
+        }
+        const parentalConsent = minors[stateName].parental_consent_required ? `<p>Minors living in ${stateName} cannot get an abortion without parental consent. (Some states require both consent and notification through separate laws.)</p>` : `<p>Minors living in ${stateName} can get an abortion without parental consent.</p>`;
 
-
-      //   minorsDiv.innerHTML = `<br>
-      //     <p><h3>State Minor Laws</h3></p>
-      //     <p></p>
-      //   `;
-      // } else {
-      //   minorsDiv.innerHTML = `<br>
-      //     <p><h3>State Minor Laws</h3></p>
-      //     <p>Sorry, minor data is unavailable for that state.</p>
-      //   `;
-      // }
-      // content.append(minorsDiv);
+        minorsDiv.innerHTML = `<br>
+          <p><h3>State Minor Laws</h3></p>
+          ${belowAge}
+          ${judicialBypass}
+          ${parentsRequired}
+          ${parentalConsent}
+        `;
+      } else {
+        minorsDiv.innerHTML = `<br>
+          <p><h3>State Minor Laws</h3></p>
+          <p>Sorry, minor data is unavailable for that state.</p>
+        `;
+      }
+      content.append(minorsDiv);
 
 
 
