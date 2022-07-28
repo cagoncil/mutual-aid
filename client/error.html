@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="client\assets\favicon.png"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="client\styles.css">
+    <title>Mutual Aid</title>
+</head>
+<body class="d-flex flex-column">
+    
+    <main class="mt-5 container p-4 p-sm-5">
+        <h1><strong>400</strong> <em>ERROR</em></h1>
+        <p id="errMsg"></p><br>
+        <h2><a href='/account' class="err-link">Go Back</a></h2>
+    </main>
+
+    <script>
+        let errStr = 'We cannot process your request at this time. Please try again later.';
+        const errMsg = document.getElementById('errMsg');
+        if (window.location.search) {
+            errStr = decodeURI(window.location.search).replace(/[^a-zA-Z:. ]/g, "");
+        }
+        errMsg.innerText = errStr;
+    </script>
+</body>
+</html>

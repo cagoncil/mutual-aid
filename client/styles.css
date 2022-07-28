@@ -159,8 +159,8 @@ em {
 
 input {
     color: #2f3034;
-    border: 1px solid #746960; 
-    border-radius: 0.25rem;
+    /* border: 1px solid #746960; 
+    border-radius: 0.25rem; */
 }
 
 .logout {

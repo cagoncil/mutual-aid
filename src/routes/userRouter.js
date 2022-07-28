@@ -108,9 +108,9 @@ router.delete('/profile', userController.authenticateUser, async (req, res, next
 });
 
 
-router.get('/error', (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, '../../client/error.html'));
-})
+// router.get('/error', (req, res) => {
+//   return res.status(200).sendFile(path.resolve(__dirname, '../../client/error.html'));
+// })
 
 
 
@@ -152,12 +152,12 @@ router.use((err, req, res, next) => { // NEEDS ALL PARAMS, IN EXACT ORDER
     return res.status(400).send({ err });  
   } else if (err.code === 11000) {
     errMsg = 'Registration failed: a user is already registered with that email.';
-    // return res.status(400).send({ Error: errMsg });
-    return res.status(400).redirect('/error?' + JSON.stringify(errMsg));
+    return res.status(400).send({ Error: errMsg });
+    // return res.status(400).redirect('/error?' + JSON.stringify(errMsg));
   }
   // if (err === 'Error: You must be logged in to view this page.') return res.redirect('/');
-  // return res.status(500).send(err);
-  return res.status(500).redirect('/error?' + JSON.stringify(err));
+  return res.status(500).send(err);
+  // return res.status(500).redirect('/error?' + JSON.stringify(err));
 });
 
 module.exports = router;
