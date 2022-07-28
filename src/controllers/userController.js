@@ -20,7 +20,7 @@ userController.createUser = async (req, res, next) => {
 };
 
 userController.validateUser = async (req, res, next) => {
-  console.log('Incoming user login request:', req.body);
+  // console.log('Incoming user login request:', req.body);
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
     console.log('Login credentials validated! Generating auth token...');
@@ -42,7 +42,7 @@ userController.authenticateUser = async (req, res, next) => {
 		const user = await User.findOne({ _id: decoded._id, 'tokens.token': token }); // grab user from database
 
 		if (!user) throw new Error('You must be logged in to view this page.'); // triggers catch(e) below
-    console.log('User authentication was successful');
+    // console.log('User authentication was successful');
 
 		res.locals.token = token; // added for logout
 		res.locals.user = user;
