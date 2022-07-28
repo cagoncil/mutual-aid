@@ -38,8 +38,7 @@ states.forEach((state) => {
     content.appendChild(div);
     document.querySelector('h6').innerText = `Processing your request for ${stateName}...`;
 
-    const devURL = `https://cors-anywhere.herokuapp.com/https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
-    const URL = `https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
+    const URL = `https://thingproxy.freeboard.io/fetch/https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
     fetch(URL, {
       method: "GET",
       mode: "cors",
