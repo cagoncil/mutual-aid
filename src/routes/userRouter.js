@@ -63,7 +63,7 @@ router.patch('/profile', userController.authenticateUser, async (req, res, next)
 	const allowedUpdates = ['name', 'email', 'password', 'oldPassword'];
 
 	const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-	if (!isValidOperation) return next({ error: 'Invalid update' });
+	if (!isValidOperation) return next({ error: 'Invalid update.' });
 
 	try {
     const { user } = res.locals;
@@ -71,14 +71,14 @@ router.patch('/profile', userController.authenticateUser, async (req, res, next)
       // Update email
 			const authenticated = await bcrypt.compare(req.body.password, user.password);
 			if (authenticated) user.email = req.body.email; // update the email if the password matches
-			else throw new Error('Password entered was invalid. Email was not updated.');
+			else throw new Error('The password you entered was invalid. The email was not successfully updated.');
 		} else if (updatedItem === 'oldPassword') {
       // Update password
 			const authenticated = await bcrypt.compare(req.body.oldPassword, user.password);
       const matchingInputs = req.body.password[0] === req.body.password[1];
       // update "password" if the current (old) password matches AND the inputs for the new password match
 			if (authenticated && matchingInputs) user.password = req.body.password[0]; 
-			else throw new Error('Password was not updated. Either the current password you entered was invalid or you did not confirm the same new password. Please try again.');
+			else throw new Error('Your password could not be updated. The current password you entered was invalid or you did not correctly confirm the same new password.');
 		} else { // Update other fields that aren't data-sensitive/don't require password validation
 			updates.forEach((update) => user[update] = req.body[update]);
 		};
@@ -108,7 +108,9 @@ router.delete('/profile', userController.authenticateUser, async (req, res, next
 });
 
 
-
+router.get('/error', (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/error.html'));
+})
 
 
 
@@ -142,18 +144,20 @@ router.use((err, req, res, next) => { // NEEDS ALL PARAMS, IN EXACT ORDER
     } else if (err.errors.hasOwnProperty('name')) {
       // console.log("err.errors.hasOwnProperty('name')", err.errors.hasOwnProperty('name'));
       errMsg = `Registration failed: ${err.errors.name.message}`;
-    } else if (err.errors.hasOwnProperty('email') && err.errors.email.message === 'Email is invalid.') {
-      errMsg = `Registration failed: ${err}`;
+    } else if (err.errors.hasOwnProperty('email') && err.name === 'ValidatorError') {
+      errMsg = `Registration failed: The email you entered is invalid. Please try a different email.`;
     } else if (err.errors.hasOwnProperty('email')) {
       errMsg = `Registration failed: ${err.errors.email.message}`;
     }
-    return res.status(400).send({ Error: err });  
+    return res.status(400).send({ err });  
   } else if (err.code === 11000) {
     errMsg = 'Registration failed: a user is already registered with that email.';
-    return res.status(400).send({ Error: errMsg });
+    // return res.status(400).send({ Error: errMsg });
+    return res.status(400).redirect('/error?' + JSON.stringify(errMsg));
   }
   // if (err === 'Error: You must be logged in to view this page.') return res.redirect('/');
-  return res.status(500).send(err);
+  // return res.status(500).send(err);
+  return res.status(500).redirect('/error?' + JSON.stringify(err));
 });
 
 module.exports = router;

@@ -170,6 +170,10 @@ input {
     cursor: pointer;
 }
 
+.btn-close:focus, .btn-close:hover, .btn-close:active {
+    box-shadow: none !important;
+}
+
 ::placeholder {
     color: rgba(217, 100, 128, 0.657);
 }
@@ -275,14 +279,16 @@ form .btn-outline-secondary {
 .edit {
     padding: 0;
     background:transparent;
-    border: none;
+    border: none !important;
+    outline: none !important;
     color: rgba(47,48,52, 0.65);
     cursor: pointer;
     font-weight: 400;
 }
 
 .edit:hover {
-    outline: none;
+    border: none !important;
+    outline: none !important;
     color: #2f3034;
 }
 

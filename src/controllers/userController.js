@@ -14,6 +14,7 @@ userController.createUser = async (req, res, next) => {
 		res.cookie('auth_token', token);
 		return next();
   } catch (err) {
+    if (err instanceof Error) err = err.toString();
 		return next(err);
   };  
 };
