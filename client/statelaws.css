@@ -1,0 +1,143 @@
+body {
+    background-image: none;
+}
+
+a {
+  color: rgba(47,48,52, 0.65);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2f3034;
+}
+
+hr {
+  border-top: 1px solid mediumvioletred;
+  margin: 1em auto;
+}
+
+h4, h6 {
+  text-align: center;
+}
+
+.container {
+  position: relative;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* #us-map {
+  background: red;
+} */
+
+path:hover, circle:hover {
+  stroke: #2f3034;
+  stroke-width:2px;
+  stroke-linejoin: round;
+  fill: #f3935d;
+  cursor: pointer;
+}
+
+#path67 {
+  fill: none;
+  stroke: #2f3034;
+  cursor: default;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(99,54,82); /* fallback */
+  background-color: rgba(99,54,82,0.4); 
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #feecd4;
+  margin: 5vh auto;
+  padding: 2rem;
+  border: 1px solid rgba(250, 105, 140, 0.45);
+  width: 60vw;
+  height: 80vh;
+  overflow: auto;
+  scrollbar-width: 6px;
+}
+
+/* The Close Button */
+.close {
+  color: #fcc089;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-left: auto;
+  margin-top: -12px;
+  transition: color linear 0.1s;
+}
+
+.close:hover,
+.close:focus {
+  color: #2f3034;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+
+  a, p, #content {
+    font-size: 1rem;
+  }
+  
+  #content h3 {
+    font-size: 1.2em;
+  }
+  
+  .modal-content {
+    margin: 10vh auto;
+    width: 80%;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    padding: 0 0.75em;
+  }
+  
+  #us-map {
+    height: auto;
+    width: 100%;
+    margin-left: 0.5rem;
+  }
+
+  .container {
+    position: relative;
+    padding-right: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 70%;
+  }
+  
+  .map-container {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    margin: auto 0;
+  }
+
+  
+}

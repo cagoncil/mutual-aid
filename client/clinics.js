@@ -1,6 +1,6 @@
 let map;
 const clinicContent = document.getElementById("clinicContent");
-clinicContent.innerText = 'Please enable your location in order to locate the nearest abortion clinic.';
+clinicContent.innerText = 'Please enable your location so we can find you the nearest abortion clinic.';
 
 navigator.geolocation.getCurrentPosition((data) => { 
   const lat = data.coords.latitude; 
