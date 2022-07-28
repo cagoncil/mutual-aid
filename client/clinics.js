@@ -11,7 +11,7 @@ states.forEach((state) => {
 
     const devURL = `https://cors-anywhere.herokuapp.com/https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
     const prodURL = `https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateCode}`;
-    fetch(prodURL, {
+    fetch(devURL, {
       method: "GET",
       mode: "cors",
       headers: {
