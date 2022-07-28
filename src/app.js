@@ -18,7 +18,7 @@ mongoose.connection.once('open', () => {
   console.log('Connected to Database');
 });
 
-// handle parsing request body
+// ======== ENABLE FOR PRODUCTION / DISABLE FOR DEVELOPMENT ========
 app.enable('trust proxy'); //needed if you're behind a load balancer
 // app.use((req, res, next) => {
 //   console.log('req.secure:', req.secure);
@@ -34,7 +34,10 @@ app.use((req, res, next) => {
   } else{
     return next();
   }
-})
+});
+// =================================================================
+
+// middleware for parsing request body
 app.use(express.json());  // Recognizes incoming req.object from a POST request as a JSON object
 app.use(express.urlencoded({ extended: false }));  // Parses data sent via forms from the frontend
 app.use(cookieParser()); // Parses cookies sent with the forms from the frontend
