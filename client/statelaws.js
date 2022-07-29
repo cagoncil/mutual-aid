@@ -114,11 +114,17 @@ states.forEach((state) => {
           <h1>${stateName}</h1>
           <p><h3>State Gestation Laws</h3></p>
           <p>Sorry, gestation law data is unavailable for that state.</p>
-          <p>Please enjoy this lovely video instead!</p>
-          <iframe width="560" height="315" style="margin: auto" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" 
-            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-          </iframe>
         `;
+        // Rick-roll version (inside joke for our Codesmith FTRI 9 & 10 cohorts)
+        // gestationDiv.innerHTML = `
+        //   <h1>${stateName}</h1>
+        //   <p><h3>State Gestation Laws</h3></p>
+        //   <p>Sorry, gestation law data is unavailable for that state.</p>
+        //   <p>Please enjoy this lovely video instead!</p>
+        //   <iframe width="560" height="315" style="margin: auto" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" 
+        //     title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        //   </iframe>
+        // `;
       }
       content.appendChild(gestationDiv);
 
