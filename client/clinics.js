@@ -9,7 +9,7 @@ navigator.geolocation.getCurrentPosition((data) => {
   clinicContent.innerText = 'Fetching the nearest abortion clinic...';
 
   fetch(
-    `https://fast-falls-79139.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=abortion%20clinics&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&key=AIzaSyDUfm93SMga2F3fBEie7PYBqry7W5EscD8&locationbias=point:${lat},${lng}`
+    `https://fast-falls-79139.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=abortion%20clinics&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&key=AIzaSyB448M7Y8Qj_OOvLL1bOsSCl0r42UHLYZ0&locationbias=point:${lat},${lng}`
   )
   .then((response) => response.json())
   .then((data) => {
