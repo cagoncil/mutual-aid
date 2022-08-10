@@ -5,11 +5,16 @@ clinicContent.innerText = 'Please enable your location so we can find you the ne
 navigator.geolocation.getCurrentPosition((data) => { 
   const lat = data.coords.latitude; 
   const lng = data.coords.longitude;
+  console.log(lat, lng);
 
   clinicContent.innerText = 'Fetching the nearest abortion clinic...';
 
   fetch(
-    `https://fast-falls-79139.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=abortion%20clinics&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&key=AIzaSyB448M7Y8Qj_OOvLL1bOsSCl0r42UHLYZ0&locationbias=point:${lat},${lng}`
+    `https://fast-falls-79139.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=abortion%20clinics&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&key=AIzaSyB448M7Y8Qj_OOvLL1bOsSCl0r42UHLYZ0&locationbias=point:${lat},${lng}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
   )
   .then((response) => response.json())
   .then((data) => {
@@ -42,5 +47,6 @@ navigator.geolocation.getCurrentPosition((data) => {
   })
   .catch((error) => {
     console.error("Error:", error);
+    clinicContent.innerText = error;
   })
 });
