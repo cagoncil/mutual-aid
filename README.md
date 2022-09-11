@@ -11,7 +11,7 @@ This project can be viewed at [safe-access.herokuapp.com](https://safe-access.he
 - **Database:** NoSQL (MongoDB / Mongoose)
 - **Authentication:** Bcrypt, Cookies, JWT
 - **RESTful APIs:** Geolocation, Google Maps, etc.
-
+- **PaaS:** Heroku
 
 ---
 
