@@ -6,11 +6,11 @@ This project can be viewed at [safe-access.herokuapp.com](https://safe-access.he
 
 ### Key Technologies:
 
-- Frontend: HTML / CSS / JavaScript (ES6+)
-- Backend: Node.js / Express.js, CORS Proxy Server
-- Database: NoSQL (MongoDB / Mongoose)
-- Authentication: Bcrypt, Cookies, JWT
-- RESTful APIs: Geolocation, Google Maps, etc.
+- **Frontend:** HTML / CSS / JavaScript (ES6+)
+- **Backend:** Node.js / Express.js, CORS Proxy Server
+- **Database:** NoSQL (MongoDB / Mongoose)
+- **Authentication:** Bcrypt, Cookies, JWT
+- **RESTful APIs:** Geolocation, Google Maps, etc.
 
 
 ---
