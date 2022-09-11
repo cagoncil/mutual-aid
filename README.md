@@ -4,6 +4,14 @@ This project can be viewed at [safe-access.herokuapp.com](https://safe-access.he
 
 **Note:** Clinic locator is currently non-functional to prevent unauthorized charges on Google Maps API account.
 
+### Key Technologies:
+
+- Frontend: HTML / CSS / JavaScript (ES6+)
+- Backend: Node.js / Express.js, CORS Proxy Server
+- Database: NoSQL (MongoDB / Mongoose)
+- Authentication: Bcrypt, Cookies, JWT
+- RESTful APIs: Geolocation, Google Maps, etc.
+
 
 ---
 
