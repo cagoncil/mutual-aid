@@ -12,7 +12,9 @@ const app = express();
 require('dotenv').config();
 
 const password = process.env.PASSWORD; // mongoDB instance password
-const mongoURI = process.env.MONGODB_URI || `mongodb+srv://cagoncil:${password}@mutualaid.nbeg1.mongodb.net/?retryWrites=true&w=majority`;
+const mongoURI =
+  process.env.MONGODB_URI ||
+  `mongodb+srv://cagoncil:${password}@mutualaid.nbeg1.mongodb.net/?retryWrites=true&w=majority`;
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once('open', () => {
   console.log('Connected to Database');
@@ -32,8 +34,8 @@ mongoose.connection.once('open', () => {
 // =================================================================
 
 // middleware for parsing request body
-app.use(express.json());  // Recognizes incoming req.object from a POST request as a JSON object
-app.use(express.urlencoded({ extended: false }));  // Parses data sent via forms from the frontend
+app.use(express.json()); // Recognizes incoming req.object from a POST request as a JSON object
+app.use(express.urlencoded({ extended: false })); // Parses data sent via forms from the frontend
 app.use(cookieParser()); // Parses cookies sent with the forms from the frontend
 app.use(methodOverride('_method')); // Allows HTML forms to process PATCH/DELETE requests
 app.use('/client', express.static(path.join(__dirname, '..', 'client'))); // Serves static files (images, css, js...) on the frontend
@@ -41,5 +43,5 @@ app.use('/client', express.static(path.join(__dirname, '..', 'client'))); // Ser
 app.use(userRouter);
 
 app.listen(port, () => {
-	console.log('Server is up on port ' + port);
-})
+  console.log('Server is up on port ' + port);
+});
