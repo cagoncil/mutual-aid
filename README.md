@@ -1,6 +1,6 @@
 # Mutual Aid
 
-This project can be viewed at [safe-access.herokuapp.com](https://mutual-aid.onrender.com/)
+This project can be viewed at [mutual-aid.onrender.com](https://mutual-aid.onrender.com/)
 
 **Note:** Clinic locator is currently non-functional to prevent unauthorized charges on Google Maps API account.
 
