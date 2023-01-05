@@ -1,15 +1,12 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel.js');
 
-
 const userController = {};
 
 userController.createUser = async (req, res, next) => {
-  // console.log('Incoming user creation request:', req.body);
   try {
     const newUser = await User.create(req.body);
     const token = await newUser.generateAuthToken();
-    console.log('auth_token:', token);
     res.cookie('auth_token', token);
     return next();
   } catch (err) {
@@ -33,10 +30,7 @@ userController.updateUser = async (req, res, next) => {
     const { user } = res.locals;
     if (updatedItem === 'email') {
       // Update email
-      const authenticated = await bcrypt.compare(
-        req.body.password,
-        user.password
-      );
+      const authenticated = await bcrypt.compare(req.body.password, user.password);
       if (authenticated) user.email = req.body.email;
       // update the email if the password matches
       else {
@@ -46,10 +40,7 @@ userController.updateUser = async (req, res, next) => {
       }
     } else if (updatedItem === 'oldPassword') {
       // Update password
-      const authenticated = await bcrypt.compare(
-        req.body.oldPassword,
-        user.password
-      );
+      const authenticated = await bcrypt.compare(req.body.oldPassword, user.password);
       const matchingInputs = req.body.password[0] === req.body.password[1];
       
       // update "password" if the current (old) password matches AND the inputs for the new password match
@@ -73,10 +64,7 @@ userController.updateUser = async (req, res, next) => {
 
 userController.deleteUser = async (req, res, next) => {
   const { user } = res.locals;
-  const authenticated = await bcrypt.compare(
-    req.body.password,
-    user.password
-  );
+  const authenticated = await bcrypt.compare(req.body.password, user.password);
   try {
     if (authenticated) {
       await user.remove();
