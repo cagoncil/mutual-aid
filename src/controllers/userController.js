@@ -8,7 +8,6 @@ userController.createUser = async (req, res, next) => {
   // console.log('Incoming user creation request:', req.body);
   try {
 		const newUser = await User.create(req.body);
-    await newUser.save();
 		const token = await newUser.generateAuthToken();
     console.log('auth_token:', token);
 		res.cookie('auth_token', token);
@@ -40,17 +39,17 @@ userController.authenticateUser = async (req, res, next) => {
 		const token = req.cookies.auth_token;
 		const decoded = jwt.verify(token, process.env.JWT_SECRET); // ensure token hasn't expired
 		const user = await User.findOne({ _id: decoded._id, 'tokens.token': token }); // grab user from database
-
+    console.log(user);
 		if (!user) throw new Error('You must be logged in to view this page.'); // triggers catch(e) below
     // console.log('User authentication was successful');
 
 		res.locals.token = token; // added for logout
 		res.locals.user = user;
-		next(); // user authenticated correctly
+		return next(); // user authenticated correctly
 	} catch (err) {
     if (err instanceof Error) err = err.toString();
 		// res.status(401).send({ error: 'Please authenticate.' })
-    next(err);
+    return next(err);
 		// res.redirect('/') // Redirects to homepage
 	};
 };

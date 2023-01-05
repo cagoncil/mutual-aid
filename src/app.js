@@ -20,19 +20,6 @@ mongoose.connection.once('open', () => {
   console.log('Connected to Database');
 });
 
-// ======== ENABLE FOR PRODUCTION / DISABLE FOR DEVELOPMENT ========
-// app.enable('trust proxy'); //needed if you're behind a load balancer (e.g., Heroku's)
-// app.use((req, res, next) => {
-//   console.log('req.secure:', req.secure);
-//   console.log("https://" + req.headers.host + req.url);
-//   if (req.header('x-forwarded-proto') !== 'https'){
-//     return res.redirect('https://' + req.header('host') + req.url);
-//   } else{
-//     return next();
-//   }
-// });
-// =================================================================
-
 // middleware for parsing request body
 app.use(express.json()); // Recognizes incoming req.object from a POST request as a JSON object
 app.use(express.urlencoded({ extended: false })); // Parses data sent via forms from the frontend

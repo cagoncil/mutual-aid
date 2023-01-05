@@ -7,9 +7,7 @@ const userController = require('../controllers/userController');
 
 // Prefers to route user to dashboard if authenticated, else re-routes user to homepage
 router.get('/', userController.authenticateUser, (req, res) => {
-  return res
-    .status(200)
-    .sendFile(path.resolve(__dirname, '../../client/dashboard.html'));
+  return res.status(200).sendFile(path.resolve(__dirname, '../../client/dashboard.html'));
 });
 
 // ===== CREATE =====
@@ -173,11 +171,10 @@ router.use((err, req, res, next) => {
   // NEEDS ALL PARAMS, IN EXACT ORDER
   if (
     err === 'Error: You must be logged in to view this page.' ||
-    err === 'JsonWebTokenError: jwt must be provided'
+    err === 'JsonWebTokenError: jwt must be provided' ||
+    err === 'JsonWebTokenError: invalid signature'
   ) {
-    return res
-      .status(200)
-      .sendFile(path.resolve(__dirname, '../../client/index.html'));
+    return res.status(200).sendFile(path.resolve(__dirname, '../../client/index.html'));
   }
 
   console.log(`Global error handler caught error: ${err}`);

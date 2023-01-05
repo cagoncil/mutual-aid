@@ -23,7 +23,7 @@ h1, h2, h3 {
 
 h1 {
     text-decoration: underline 7px #fcc089;
-    text-underline-offset: -2px;
+    text-underline-offset: 0.25rem;
     margin-bottom: 2rem;
 }
 
