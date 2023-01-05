@@ -1,57 +1,95 @@
-const jwt = require('jsonwebtoken'); // for authenticateUser
-require('dotenv').config(); // for authenticateUser
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel.js');
+
 
 const userController = {};
 
 userController.createUser = async (req, res, next) => {
   // console.log('Incoming user creation request:', req.body);
   try {
-		const newUser = await User.create(req.body);
-		const token = await newUser.generateAuthToken();
+    const newUser = await User.create(req.body);
+    const token = await newUser.generateAuthToken();
     console.log('auth_token:', token);
-		res.cookie('auth_token', token);
-		return next();
-  } catch (err) {
-    if (err instanceof Error) err = err.toString();
-		return next(err);
-  };  
-};
-
-userController.validateUser = async (req, res, next) => {
-  // console.log('Incoming user login request:', req.body);
-  try {
-    const user = await User.findByCredentials(req.body.email, req.body.password);
-    console.log('Login credentials validated! Generating auth token...');
-    const token = await user.generateAuthToken();
-    // console.log('auth_token:', token);
     res.cookie('auth_token', token);
     return next();
   } catch (err) {
     if (err instanceof Error) err = err.toString();
     return next(err);
-  };
+  };  
 };
 
-userController.authenticateUser = async (req, res, next) => {
-  // console.log('authenticating the following user:', req.body);
-	try {
-		const token = req.cookies.auth_token;
-		const decoded = jwt.verify(token, process.env.JWT_SECRET); // ensure token hasn't expired
-		const user = await User.findOne({ _id: decoded._id, 'tokens.token': token }); // grab user from database
-    console.log(user);
-		if (!user) throw new Error('You must be logged in to view this page.'); // triggers catch(e) below
-    // console.log('User authentication was successful');
+userController.updateUser = async (req, res, next) => {
 
-		res.locals.token = token; // added for logout
-		res.locals.user = user;
-		return next(); // user authenticated correctly
-	} catch (err) {
+  const updates = Object.keys(req.body);
+  const updatedItem = updates[0];
+  const allowedUpdates = ['name', 'email', 'password', 'oldPassword'];
+
+  const isValidOperation = updates.every(update =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation) return next({ error: 'Invalid update.' });
+
+  try {
+    const { user } = res.locals;
+    if (updatedItem === 'email') {
+      // Update email
+      const authenticated = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      if (authenticated) user.email = req.body.email;
+      // update the email if the password matches
+      else {
+        throw new Error(
+          'The password you entered was invalid. The email was not successfully updated.'
+        );
+      }
+    } else if (updatedItem === 'oldPassword') {
+      // Update password
+      const authenticated = await bcrypt.compare(
+        req.body.oldPassword,
+        user.password
+      );
+      const matchingInputs = req.body.password[0] === req.body.password[1];
+      
+      // update "password" if the current (old) password matches AND the inputs for the new password match
+      if (authenticated && matchingInputs) user.password = req.body.password[0];
+      else {
+        throw new Error(
+          'Your password could not be updated. The current password you entered was invalid or you did not correctly confirm the same new password.'
+        );
+      }
+    } else {
+      // Update other fields that aren't data-sensitive/don't require password validation
+      updates.forEach(update => (user[update] = req.body[update]));
+    }
+    await user.save();
+    return next();
+  } catch (err) {
     if (err instanceof Error) err = err.toString();
-		// res.status(401).send({ error: 'Please authenticate.' })
     return next(err);
-		// res.redirect('/') // Redirects to homepage
-	};
-};
+  }
+}
+
+userController.deleteUser = async (req, res, next) => {
+  const { user } = res.locals;
+  const authenticated = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
+  try {
+    if (authenticated) {
+      await user.remove();
+      return next();
+    } else {
+      throw new Error(
+        'Password entered was invalid. Account deletion was unsuccessful.'
+      );
+    }
+  } catch (err) {
+    if (err instanceof Error) err = err.toString();
+    return next(err);
+  }
+}
 
 module.exports = userController;
