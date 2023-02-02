@@ -20,6 +20,7 @@ mongoose.connection.once('open', () => {
   console.log('Connected to Database');
 });
 
+
 // middleware for parsing request body
 app.use(express.json()); // Recognizes incoming req.object from a POST request as a JSON object
 app.use(express.urlencoded({ extended: false })); // Parses data sent via forms from the frontend
@@ -32,3 +33,5 @@ app.use(userRouter);
 app.listen(port, () => {
   console.log('Server is up on port ' + port);
 });
+
+module.exports = app;
