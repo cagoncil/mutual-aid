@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@100;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter&family=Manrope&family=Source+Sans+Pro&display=swap');
 
 body {
     height: 100vh;
     color: #2f3034;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: peachpuff;
     background-image: url('assets/women.png');
     background-size: 60%;
@@ -12,7 +12,9 @@ body {
 }
 
 .glass {
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     border-radius: 30px;
 }
 
@@ -40,7 +42,7 @@ h4 {
 button {
     background: #fa698c;
     color: #fff;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 300;
     font-size: 1rem;
     border-radius: 40px;
@@ -100,6 +102,7 @@ button {
 }
 
 a {
+    font-family: 'Inter';
     color: #2f3034;
     font-size: 1rem;
     transition: color linear 0.2s;
