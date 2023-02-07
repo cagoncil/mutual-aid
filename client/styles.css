@@ -97,8 +97,10 @@ button {
 .submit-pink {
     border-radius: 5px;
     box-sizing: content-box;
-    background: #fff;
-    font-weight: 400;
+    /* background: #fff; */
+    background: rgba(217, 100, 128, 0.35);
+    font-weight: 500;
+    transition: 0.25s all ease-in-out;
 }
 
 a {
@@ -145,6 +147,14 @@ em {
     padding-left: 0;
 }
 
+.modal-footer {
+    border-top-color: rgba(250, 105, 140, 0.45);
+    width: 90%;
+    margin: auto;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 .modal-body {
     width: 90%;
     margin: auto;
@@ -164,6 +174,14 @@ input {
     color: #2f3034;
     /* border: 1px solid #746960; 
     border-radius: 0.25rem; */
+}
+
+.py-1 {
+    /* background: rgba(217, 100, 128, 0.657); */
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(0.75px);
+    border-radius: 5px;
+    border: 1px solid #fa698c;
 }
 
 .logout {
