@@ -103,6 +103,11 @@ button {
     transition: 0.25s all ease-in-out;
 }
 
+    .submit-pink:focus, .submit-pink:active, .submit-pink:hover {
+        border: 1px solid #fa698c;
+        box-shadow: 0 0 0 .25rem rgba(250, 105, 140, 0.35);
+    }
+
 a {
     font-family: 'Inter';
     color: #2f3034;
@@ -184,6 +189,12 @@ input {
     border: 1px solid #fa698c;
 }
 
+.py-1:focus {
+    border-color: #fa698c;
+    outline: none;
+    box-shadow: 0 0 0 .25rem rgba(250, 105, 140, 0.35);
+}
+
 .logout {
     background:transparent;
     border:0px;
@@ -196,7 +207,7 @@ input {
 }
 
 ::placeholder {
-    color: rgba(217, 100, 128, 0.657);
+    color: rgba(217, 100, 128, 0.657) !important;
 }
 
 ::selection {
@@ -226,6 +237,7 @@ input {
     .form-control:focus {
         border-color: #fa698c;
         box-shadow: 0 0 0 .25rem rgba(250, 105, 140, 0.35);
+        background: rgba(255,255,255,0.55);
     }
 
 .input-group .btn-outline-secondary {
@@ -276,7 +288,11 @@ form .form-control {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background: rgba(255,255,255,0.55);
+    /* backdrop-filter: blur(0.75px);
+    border-radius: 5px;
+    border: 1px solid #fa698c; */
     background-clip: padding-box;
 }
 
