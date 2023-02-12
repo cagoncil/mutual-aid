@@ -11,7 +11,7 @@ This project can be viewed at [mutual-aid.onrender.com](https://mutual-aid.onren
 - **Database:** NoSQL (MongoDB / Mongoose)
 - **Authentication:** Bcrypt, Cookies, JWT
 - **RESTful APIs:** Geolocation, Google Maps, etc.
-- **PaaS:** Heroku
+- **PaaS:** ~~Heroku~~ Render
 
 ---
 
